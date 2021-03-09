@@ -25,7 +25,12 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find_by(params.require(:task).permit(:details))
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: '編集しました'
+    else
+      render :edit
+    end
   end
 
   def destroy

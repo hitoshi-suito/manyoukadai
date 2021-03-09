@@ -7,8 +7,10 @@
     <% @tasks.each do |task| %>
     <tr>
         <td><%= task.details %></td>
-        <td><%= link_to '新規投稿', new_task_path %></td>
         <td><%= link_to '詳細画面', task_path(task.id) %></td>
+        <td><%= link_to '編集画面', edit_task_path(task.id) %></td>
     </tr>
     <% end %>
 </table>
+
+<%= link_to '新規投稿', new_task_path %>
