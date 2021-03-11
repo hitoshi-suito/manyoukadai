@@ -6,7 +6,8 @@
     </tr>
     <% @tasks.each do |task| %>
     <tr>
-        <td><%= task.details %></td>
+        <td>タイトル：<%= task.title %></td>
+        <td>内容：<%= task.details %></td>
         <td><%= link_to '詳細画面', task_path(task.id) %></td>
         <td><%= link_to '編集画面', edit_task_path(task.id), data: {confirm: '編集しますか？'} %></td>
         <td><%= link_to '削除', task_path(task.id), method: :delete, data: {confirm: '本当に削除していいですか？'} %></td>
