@@ -1,23 +1,23 @@
-Herokuへのデプロイ方法
-1.アセットプリコンパイルをする
+Herokuへのデプロイ方法<br>
+1.アセットプリコンパイルをする<br>
 $ rails assets:precompile RAILS_ENV=production
 
-2.コミットする
-~/workspace/heroku_test_app (master) $ git add -A
-~/workspace/heroku_test_app (master) $ git commit -m "init"
+2.コミットする<br>
+~/workspace/heroku_test_app (master) $ git add -A<br>
+~/workspace/heroku_test_app (master) $ git commit -m "init"<br>
 
-3.Herokuに新しいアプリを作成する
-$ heroku create
+3.Herokuに新しいアプリを作成する<br>
+$ heroku create<br>
 
-4.Heroku buildpackを追加する
-$ heroku buildpacks:set heroku/ruby
-$ heroku buildpacks:add --index 1 heroku/nodejs
+4.Heroku buildpackを追加する<br>
+$ heroku buildpacks:set heroku/ruby<br>
+$ heroku buildpacks:add --index 1 heroku/nodejs<br>
 
-5.Herokuにデプロイする
-$ git push heroku master
+5.Herokuにデプロイする<br>
+$ git push heroku master<br>
 
-6.データベースを移行する
-$ heroku run rails db:migrate
+6.データベースを移行する<br>
+$ heroku run rails db:migrate<br>
 
 Userモデル
 |カラム名  |データ型 |
