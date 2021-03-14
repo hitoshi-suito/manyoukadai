@@ -14,7 +14,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'Details', with: 'bbb'
       # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
       # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-      click_on value='Create Task'
+      click_on '登録する'
       # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
       # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
       # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
@@ -31,6 +31,16 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         expect(page).to have_content 'task'
         expect(page).to have_content 'second_task'
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        task = FactoryBot.create(:task, title: 'task')
+        second_task = FactoryBot.create(:second_task, title: 'second_task')
+        task_lists = all('.task_row')
+        visit tasks_path
+        sleep(5)
+        expect(task_lists[0]).to have_content 'second_task'
       end
     end
   end
