@@ -1,5 +1,9 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  before do
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -14,7 +18,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'Details', with: 'bbb'
       # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
       # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-      click_on value='Create Task'
+      click_on '登録する'
       # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
       # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
       # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
@@ -26,11 +30,17 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        task = FactoryBot.create(:task, title: 'task')
-        second_task = FactoryBot.create(:second_task, title: 'second_task')
         visit tasks_path
-        expect(page).to have_content 'task'
-        expect(page).to have_content 'second_task'
+        expect(page).to have_content 'test_title'
+        expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do      
+        visit tasks_path
+        task_lists = all('.task_title')
+        expect(task_lists[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
+        expect(task_lists[1]).to have_content 'test_title'
       end
     end
   end
