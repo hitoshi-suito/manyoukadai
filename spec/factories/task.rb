@@ -6,6 +6,6 @@ FactoryBot.define do
     end
     factory :second_task, class: Task do
         title { 'Factoryで作ったデフォルトのタイトル２' }
-        details { 'Factoryで作ったデフォルトのコンテント２' }
+        details { 'Factoryで作ったデフォルトのディテール２' }
     end
   end
