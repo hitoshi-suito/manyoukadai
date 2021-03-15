@@ -36,10 +36,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
         task = FactoryBot.create(:task, title: 'task')
-        second_task = FactoryBot.create(:second_task, title: 'second_task')
-        task_lists = all('.task_row')
+        second_task = FactoryBot.create(:second_task, title: 'second_task')       
         visit tasks_path
-        sleep(5)
+        task_lists = all('.task_title')
         expect(task_lists[0]).to have_content 'second_task'
       end
     end
