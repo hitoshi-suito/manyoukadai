@@ -16,7 +16,12 @@
     <%= form.text_field :details %>
     <%= form.label :expired_at %>
     <%= form.datetime_field :expired_at %>
+    <%= form.label :status, 'ステータス' %>
+    <%= form.select :status, {'未着手': '未着手', '着手中': '着手中', '完了': '完了'}, { include_blank: '選択してください'} %>
     <%= form.submit %>
 <% end %>
+
+
+
 
 <%= link_to '一覧に戻る', tasks_path %>
