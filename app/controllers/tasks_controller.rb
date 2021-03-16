@@ -12,6 +12,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
+      
       redirect_to tasks_path, notice: '投稿しました'
     else
       render :new
@@ -39,7 +40,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :details)
+    params.require(:task).permit(:title, :details, :expired_at)
   end
 
   def set_task
