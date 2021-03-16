@@ -7,23 +7,14 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
-        # 1. new_task_pathに遷移する（新規作成ページに遷移する）
-      # ここにnew_task_pathにvisitする処理を書く
-      visit new_task_path
-      # 2. 新規登録内容を入力する
-      #「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄にタスクのタイトルと内容をそれぞれ入力する
-      # ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
+      visit new_task_path    
       fill_in 'Title', with: 'aaa'
-      # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
       fill_in 'Details', with: 'bbb'
-      # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
-      # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-      click_on '登録する'
-      # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
-      # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
-      # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
+      fill_in :task_expired_at, with: '002020-10-06-15:00'
+      click_on '登録する'       
       expect(page).to have_content 'aaa'
       expect(page).to have_content 'bbb'
+      expect(page).to have_content '2020-10-06 15:00'
       end
     end
   end
@@ -35,15 +26,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'Factoryで作ったデフォルトのタイトル２'
       end
     end
+  end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do      
         visit tasks_path
-        task_lists = all('.task_title')
-        expect(task_lists[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
-        expect(task_lists[1]).to have_content 'test_title'
+        task_lists = all('.task_expired_at')
+        expect(task_lists[0]).to have_content '2021-01-20 19:00'
+        expect(task_lists[1]).to have_content '2020-10-06 15:00'
       end
     end
-  end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示される' do
