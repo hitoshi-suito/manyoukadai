@@ -16,7 +16,7 @@
     <%= form.text_field :details %>
     <%= form.label :expired_at %>
     <%= form.datetime_field :expired_at %>
-    <%= form.label :status, 'ステータス' %>
+    <%= form.label :status, 'status' %>
     <%= form.select :status, Task.statuses.keys, { include_blank: '選択してください'} %>
     <%= form.submit %>
 <% end %>
