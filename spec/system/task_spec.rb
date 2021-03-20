@@ -12,12 +12,14 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in 'Details', with: 'bbb'
       fill_in :task_expired_at, with: '002021-03-17　11:39'
       select '未着手', from: 'status'
+      select '中', from: 'priority'
      
       click_on '登録する'       
       expect(page).to have_content 'aaa'
       expect(page).to have_content 'bbb'
       expect(page).to have_content '2021-03-17　11:39'
       expect(page).to have_content '未着手'
+      expect(page).to have_content '中'
       end
     end
   end
