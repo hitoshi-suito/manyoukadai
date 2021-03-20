@@ -42,6 +42,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_on '優先度でソートする'
         task_lists = all('.task_priority')
+        sleep(5)
         expect(task_lists[0]).to have_content '高'
         expect(task_lists[1]).to have_content '低'
       end
