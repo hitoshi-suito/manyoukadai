@@ -5,12 +5,14 @@
     <th>内容</th>
     <th>終了期限</th>
     <th>ステータス</th>
+    <th>優先度</th>
   </tr>
   <tr>
     <td><%= @task.title %></td>
     <td><%= @task.details %></td>
     <td><%= simple_time(@task.expired_at) %></td>
     <td><%= @task.status %></td>
+    <td><%= @task.priority %></td>
   </tr>
 </table>
 
