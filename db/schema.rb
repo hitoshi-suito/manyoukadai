@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_03_19_142713) do
     t.datetime "expired_at", default: -> { "now()" }, null: false
     t.integer "status"
     t.integer "priority"
+    t.index ["details"], name: "index_tasks_on_details"
     t.index ["title"], name: "index_tasks_on_title"
   end
 
