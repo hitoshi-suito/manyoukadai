@@ -38,3 +38,5 @@
 <%= link_to '終了期限でソートする', tasks_path(sort_expired: "true") %>
 <%= link_to '優先度でソートする', tasks_path(sort_priority: "true") %>
 <%= link_to 'リセット', tasks_path %>
+
+<%= paginate @tasks %>
