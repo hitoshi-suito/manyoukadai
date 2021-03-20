@@ -1,7 +1,15 @@
 <h2>編集画面</h2>
 <%= form_with(model: @task, local: true) do |form| %>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
     <%= form.label :details %>
-    <%= form.text_field :details %>   
+    <%= form.text_field :details %>  
+    <%= form.label :expired_at %>
+    <%= form.datetime_field :expired_at %>
+    <%= form.label :status, 'status' %>
+    <%= form.select :status, Task.statuses.keys, { include_blank: '選択してください'} %>
+    <%= form.label :priority, 'priority' %>
+    <%= form.select :priority, Task.priorities.keys, { include_blank: '選択してください' } %> 
     <%= form.submit %>
 <% end %>
 
