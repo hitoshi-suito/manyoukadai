@@ -7,23 +7,19 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
-        # 1. new_task_pathに遷移する（新規作成ページに遷移する）
-      # ここにnew_task_pathにvisitする処理を書く
-      visit new_task_path
-      # 2. 新規登録内容を入力する
-      #「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄にタスクのタイトルと内容をそれぞれ入力する
-      # ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
+      visit new_task_path    
       fill_in 'Title', with: 'aaa'
-      # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
       fill_in 'Details', with: 'bbb'
-      # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
-      # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-      click_on '登録する'
-      # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
-      # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
-      # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
+      fill_in :task_expired_at, with: '002021-03-17　11:39'
+      select '未着手', from: 'status'
+      select '中', from: 'priority'
+     
+      click_on '登録する'       
       expect(page).to have_content 'aaa'
       expect(page).to have_content 'bbb'
+      expect(page).to have_content '2021-03-17　11:39'
+      expect(page).to have_content '未着手'
+      expect(page).to have_content '中'
       end
     end
   end
@@ -38,9 +34,19 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do      
         visit tasks_path
-        task_lists = all('.task_title')
-        expect(task_lists[0]).to have_content 'Factoryで作ったデフォルトのタイトル２'
-        expect(task_lists[1]).to have_content 'test_title'
+        task_lists = all('.task_expired_at')
+        expect(task_lists[0]).to have_content '2022-04-29　16:28'
+        expect(task_lists[1]).to have_content '2021-03-02　14:18'
+      end
+    end
+    context 'タスクが優先順位の降順に並んでいる場合' do
+      it '優先度の高いタスクが一番上に表示される' do
+        visit tasks_path
+        click_on '優先度でソートする'
+        task_lists = all('.task_priority')
+        sleep(5)
+        expect(task_lists[0]).to have_content '高'
+        expect(task_lists[1]).to have_content '低'
       end
     end
   end
@@ -52,5 +58,33 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'task'
        end
      end
+  end
+  describe '検索機能' do
+    context 'タイトルで検索した場合' do
+      it '検索結果が表示される' do
+        visit tasks_path
+        fill_in 'title', with: 'test'
+        click_on 'search'
+        expect(page).to have_content 'test'
+      end
+    end
+    context 'ステータスで検索した場合' do
+      it '検索結果が表示される' do 
+        visit tasks_path
+        select '着手中', from: 'status'
+        click_on 'search'
+        expect(page).to have_content '着手中'
+      end
+    end
+    context 'タイトルとステータスで検索した場合' do
+      it '検索結果が表示される' do
+        visit tasks_path
+        fill_in 'title', with: 'test'
+        select '未着手', from: 'status'
+        click_on 'search'
+        expect(page).to have_content 'test'
+        expect(page).to have_content '未着手'
+      end
+    end
   end
 end
