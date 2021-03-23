@@ -4,6 +4,12 @@
   password = "password"
   User.create!(name: name,
                email: email,
-               password_digest: password,
+               password: password,
                )
 end
+
+User.create!(name:  "Example User",
+             email: "example@railstutorial.org",
+             password:              "foobar",
+             password_confirmation: "foobar",
+             admin: true)
