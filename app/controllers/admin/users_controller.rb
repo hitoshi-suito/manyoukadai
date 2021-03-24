@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :destroy, :update]
 
   def index
-    @users = User.all.includes(:tasks)
+    @users = User.includes(:tasks)
   end
 
   def new
@@ -20,12 +20,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-   
   end
 
   def update
     if @user.update(user_params)
-      redirect_to admin_user_path, notice: '編集しました'
+      redirect_to admin_users_path, notice: '編集しました'
     else
       render :edit
     end
@@ -35,15 +34,18 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    if @user.destroy
+      # @user.admin > 0 FalseClassで定義されている'>'が使えないのはなぜ？
+    if
+      @user.destroy
       redirect_to admin_users_path, notice: 'ユーザを削除しました'
+    else
+      redirect_to admin_users_path, notice: '管理者がいなくなってしまうので、削除できませんでした'
     end
   end
 
   private
   def admin_user
-    redirect_to root_path unless current_user.admin?
-    # flash[:notice] = '管理者以外はアクセスできません'
+    redirect_to root_path, notice: '管理者以外はアクセスできません' unless current_user.admin?
   end
 
   def set_user
