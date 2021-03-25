@@ -34,7 +34,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-      # @user.admin > 0 FalseClassで定義されている'>'が使えないのはなぜ？
     if
       @user.destroy
       redirect_to admin_users_path, notice: 'ユーザを削除しました'
