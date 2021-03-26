@@ -1,3 +1,4 @@
+<h3>ユーザ編集画面</h3>
 <%= form_with( model: [:admin, @user], url: admin_user_path, local: true) do |f| %>
   <div class="user_name form-group">
     <%= f.label :name %>
@@ -19,5 +20,5 @@
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
   </div>
-  <%= f.submit "Update account" %>
+  <%= f.submit "Update account", id: "admin_users_edit_form-submit" %>
   <% end %>
