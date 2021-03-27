@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     
     @tasks = @tasks.order(expired_at: :DESC) if params[:sort_expired]
    
@@ -27,8 +27,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
-      
       redirect_to tasks_path, notice: '投稿しました'
     else
       render :new
