@@ -6,6 +6,7 @@
     <th>終了期限</th>
     <th>ステータス</th>
     <th>優先度</th>
+    <th>ラベル</th>
   </tr>
   <tr>
     <td><%= @task.title %></td>
@@ -13,6 +14,9 @@
     <td><%= simple_time(@task.expired_at) %></td>
     <td><%= @task.status %></td>
     <td><%= @task.priority %></td>
+    <% @task.labels.each do |label| %>
+      <td><%= label.name %></td>
+    <% end %>
   </tr>
 </table>
 
