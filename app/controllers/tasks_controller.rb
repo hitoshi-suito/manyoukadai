@@ -9,9 +9,12 @@ class TasksController < ApplicationController
     @tasks = @tasks.order(priority: :DESC) if params[:sort_priority]
    
     @tasks = @tasks.title_search(params[:title]) if params[:title]
+    
     if params[:status] != "" && params[:status] != nil
       @tasks = @tasks.status_search(params[:status])
     end
+
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     
     @tasks = @tasks.order(created_at: :DESC)
 
@@ -56,7 +59,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :details, :expired_at, :status, :priority)
+    params.require(:task).permit(:title, :details, :expired_at, :status, :priority, label_ids: [])
   end
 
   def set_task
